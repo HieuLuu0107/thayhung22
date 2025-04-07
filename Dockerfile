@@ -39,3 +39,6 @@ RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-avail
 EXPOSE 8080
 
 CMD ["apache2-foreground"]
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
