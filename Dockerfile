@@ -30,4 +30,4 @@ RUN echo "<Directory /var/www/html/public>\n\
     AllowOverride All\n\
 </Directory>" >> /etc/apache2/apache2.conf
 
-EXPOSE $PORT
+EXPOSE 3000
