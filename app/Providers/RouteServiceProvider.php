@@ -16,8 +16,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
 
             // Web route cho /
-            Route::middleware('web')
-                ->group(base_path('public/index.php'));
+            
         });
     }
 }
