@@ -1,8 +1,26 @@
 services:
   - type: web
-    name: laravel-app
-    env: php
-    buildCommand: "docker build -t laravel-app ."
-    startCommand: "docker run -p 80:80 laravel-app"
-    settings:
-      documentRoot: "/var/www/html/public"
+    name: webthuvien
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromService:
+            type: psql
+            name: webthuvien-db
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: ten_database
+      - key: DB_USERNAME
+        value: ten_user
+      - key: DB_PASSWORD
+        sync: false
