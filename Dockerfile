@@ -18,10 +18,9 @@ WORKDIR /var/www
 
 COPY . .
 
-# Laravel permission
-RUN chown -R www-data:www-data \
-    storage \
-    bootstrap/cache
+# Laravel permission fix (QUAN TRỌNG)
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
 # Cài dependency
 RUN composer install --optimize-autoloader --no-dev
@@ -36,23 +35,6 @@ RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/Allo
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["apache2-foreground"]
-
-# Cài đặt Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs
-
-# Cài đặt các gói npm và biên dịch tài nguyên frontend
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-# Tạo app key
-RUN php artisan key:generate
-
-# Clear và cache config
-RUN php artisan config:clear && php artisan config:cache
-
-
