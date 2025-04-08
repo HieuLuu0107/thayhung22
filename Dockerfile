@@ -49,4 +49,10 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
+# Tạo app key
+RUN php artisan key:generate
+
+# Clear và cache config
+RUN php artisan config:clear && php artisan config:cache
+
 
