@@ -1,3 +1,5 @@
+dd('Laravel đang chạy!');
+
 <?php
 
 use Illuminate\Contracts\Http\Kernel;
