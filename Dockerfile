@@ -36,6 +36,17 @@ RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/Allo
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["apache2-foreground"]
+
+# Cài đặt Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs
+
+# Cài đặt các gói npm và biên dịch tài nguyên frontend
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
